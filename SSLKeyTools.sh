@@ -13,7 +13,7 @@
 # ---- client
 # -------- Client.java
 # -------- truststore
-# -------- <name>.cer
+# -------- mv <name>.cer
 # -- SSLKeyTool.sh
 # 
 
