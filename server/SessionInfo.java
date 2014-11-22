@@ -9,7 +9,7 @@ public class SessionInfo {
 	private String peerHost;
 	private String cipherSuite;
 	private String protocol;
-	private String sessionId;
+	private byte[] sessionId;
 	private long creationTime;
 	private long lastAccessTime;
 
@@ -17,7 +17,7 @@ public class SessionInfo {
 		this.setPeerHost(session.getPeerHost());
 		this.setCipherSuite(session.getCipherSuite());
 		this.setProtocol(session.getProtocol());
-		this.setSessionId(session.getId().toString());
+		this.setSessionId(session.getId());
 		this.setCreationTime(session.getCreationTime());
 		this.setLastAccessTime(session.getLastAccessedTime());
 	}
@@ -48,12 +48,12 @@ public class SessionInfo {
 		this.protocol = protocol;
 	}
 
-	public String getSessionId() {
+	public byte[] getSessionId() {
 		return sessionId;
 	}
 
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
+	public void setSessionId(byte[] bs) {
+		this.sessionId = bs;
 	}
 
 	public long getCreationTime() {
@@ -78,10 +78,11 @@ public class SessionInfo {
 	 * Prints the SessionInfo
 	 */
 	public void printSessionInfo() {
+		System.out.println("New connection established...");
 		System.out.println("Peer host is: " + this.getPeerHost());
 		System.out.println("Cipher suite is: " + this.getCipherSuite());
 		System.out.println("Protocol is: " + this.getProtocol());
-		System.out.println("Session ID is: " + this.getSessionId());
+		System.out.println("Session ID is: " + this.getSessionId().toString());
 		System.out.println("The creation time of this session is: "
 				+ new Date(this.getCreationTime()));
 		System.out.println("Last accessed time of this session is: "

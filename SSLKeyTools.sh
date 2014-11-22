@@ -1,21 +1,8 @@
 #!/bin/bash
-# Filname: SSLKeytool.sh
+# Filname: SSLKeysttoreGenerator.sh
 # Author: Joshua Michael Waggoner
 # Git-Hub: github.com/rabbitfighter81/SSLSockets
-# Purpose: keytool to create a simple JKS keystore suitable for use with JSSEServer for my final project. 
-# Assumes there are two folders within the project root and tthe contents are as follows
-# 
-# JSSEServer
-# ---- server
-# -------- Server.java
-# -------- SessionInfo.java
-# -------- keystore
-# ---- client
-# -------- Client.java
-# -------- truststore
-# -------- mv <name>.cer
-# -- SSLKeyTool.sh
-# 
+# Purpose: keytool to create a simple JKS keystore suitable for use with JSSE. 
 
 # Get the username to use with keytool
 echo "Welcome to keystore generator..."
@@ -58,7 +45,7 @@ do
             echo "you chose \"Create new keystore\""
 
 			keytool -genkeypair -alias $username -keyalg RSA \
-			-validity 7 -keystore server/keystore
+			-validity 7 -keystore keystore
         ;;
 
         # 2) Examine the keystore
@@ -66,7 +53,7 @@ do
 
             echo "You chose \"Examine the keystore\""
 
-			keytool -list -v -keystore server/keystore
+			keytool -list -v -keystore keystore
         ;;
 
         # 3) Export and examine the self-signed certificate.
@@ -74,8 +61,8 @@ do
 
             echo "You chose \"Export and examine the self-signed certificate\""
 
-			keytool -export -alias $username -keystore server/keystore -rfc \
-			-file client/$username.cer
+			keytool -export -alias $username -keystore keystore -rfc \
+			-file $username.cer
         ;;
 
         # 4) Import the certificate into a new truststore.
@@ -83,8 +70,8 @@ do
 
 	        echo "You chose \"Import the certificate into a new truststore\""
 
-			keytool -import -alias $username -file client/$username.cer \
-			-keystore client/truststore
+			keytool -import -alias $username -file $username.cer \
+			-keystore truststore
         ;;
 
         # 5) Examine the truststore.
@@ -92,9 +79,10 @@ do
 
 	        echo "You chose \"Examine the truststore\""
 
-			keytool -list -v -keystore client/truststore
+			keytool -list -v -keystore truststore
         ;;
 
+        # 6) Add to local JVM's truststore
         "Add to your local JVM's trust store")
 
 			echo "You chose \"Add to your local JVM's trust store\""
@@ -105,7 +93,7 @@ do
 
 			read path
 
-			sudo keytool -import -file client/$username.cer -alias "${username}" -keystore "${path}"
+			sudo keytool -import -file $username.cer -alias "${username}" -keystore "${path}"
 
 		;;
 
@@ -113,7 +101,7 @@ do
         ##                                   REGULAR RUN MODES                                   ##
         ###########################################################################################
 
-        # 6) Now run your applications with the appropriate key stores.
+        # 7) Now run your applications with the appropriate key stores.
         "Run your application's server with the appropriate key stores")
 
 	        echo "You chose \"Run your application's server with the appropriate key stores\""
@@ -124,11 +112,11 @@ do
 	        echo "Please enter the port number to use and press [ENTER]"
 	        read portNumber
 
-			java -Djavax.net.ssl.keyStore=client/keystore \
-			-Djavax.net.ssl.keyStorePassword="${password_keystore}" server/"${server}" "${portNumber}"
+			java -Djavax.net.ssl.keyStore=keystore \
+			-Djavax.net.ssl.keyStorePassword="${password_keystore}" "${server}" "${portNumber}"
         ;;
 
-        # 7) Now run your application's clients with the appropriate key stores. 
+        # 8) Now run your application's clients with the appropriate key stores. 
         "Run your application's client with the appropriate key stores")
 
 	        echo "You chose \"Run your application's client with the appropriate key stores\""
@@ -141,8 +129,8 @@ do
 	        echo "Please enter the hostname to use and press [ENTER]"
 	        read hotName
 
-			java -Djavax.net.ssl.keyStore=client/keystore \
-			-Djavax.net.ssl.keyStorePassword="${password_keystore}" client/"${client}" "${hostName}" "${portNumber}"
+			java -Djavax.net.ssl.keyStore=keystore \
+			-Djavax.net.ssl.keyStorePassword="${password_keystore}" "${client}" "${hostName}" "${portNumber}"
         ;;
 
         ###########################################################################################
@@ -160,9 +148,9 @@ do
 	        echo "Please enter the port number tto use and press [ENTER]"
 	        read portNumber
 
-			java -Djavax.net.ssl.keyStore=client/keystore \
+			java -Djavax.net.ssl.keyStore=keystore \
 			-Djavax.net.ssl.keyStorePassword="${password_keystore}" \
-			-Djavax.net.debug=all server/"${server}" "${portNumber}"
+			-Djavax.net.debug=all "${server}" "${portNumber}"
 		;;
 
 		# Run your application's clients with the appropriate key stores IN DEBUG MODE. 
@@ -178,9 +166,9 @@ do
 	        echo "Please enter the hostname to use and press [ENTER]"
 	        read hotName
 
-			java -Djavax.net.ssl.keyStore=client/keystore \
+			java -Djavax.net.ssl.keyStore=keystore \
 			-Djavax.net.ssl.keyStorePassword="${password_keystore}" \
-			-Djavax.net.debug=all client/"${client}" "${hostName}" "${portNumber}"
+			-Djavax.net.debug=all "${client}" "${hostName}" "${portNumber}"
 
         ;;
 

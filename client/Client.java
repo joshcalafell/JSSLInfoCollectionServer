@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.Scanner;
+
 import javax.net.ssl.*;
 
 /**
@@ -7,6 +9,7 @@ import javax.net.ssl.*;
  */
 public class Client {
 
+	@SuppressWarnings("resource")
 	public static void main(String args[]) {
 
 		/*
@@ -28,22 +31,39 @@ public class Client {
 			SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory
 					.getDefault();
 			// New SSL Socket
-			SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket(hostName,
-					portNumber);
-			socket.setEnabledCipherSuites(socket.getSupportedCipherSuites());
+			SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket(
+					hostName, portNumber);
+			System.out.println("Client connected at port <" + portNumber
+					+ "> on <" + hostName + ">");
+
 			// Print writer for output stream
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			// Buffered reader for input
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					System.in));
 
+			// For receiving input
+			Scanner fromServer = new Scanner(socket.getInputStream());
+
+			// For input
 			String line = null;
+
 			/*
-			 * While there is input, send it to the server
+			 * Initially send this message to start the handshake and get a
+			 * response from the server
 			 */
-			while ((line = in.readLine()) != null) {
-				System.out.println("Input: " + line);
-				out.println(line);
+			out.println("Client established connection at port " + portNumber);
+			/*
+			 * While there is input, print the input from server, and then send
+			 * the response back
+			 */
+			while (fromServer.hasNext()) {
+				// Print the line from the server
+				System.out.println(fromServer.nextLine());
+				// When the user has pressed [ENTER], print out to the server
+				if ((line = in.readLine()) != null) {
+					out.println(line);
+				}
 			}
 		} catch (IOException e) {
 			System.out
