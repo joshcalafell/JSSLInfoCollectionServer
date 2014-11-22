@@ -1,15 +1,16 @@
 import java.io.*;
+import java.util.Date;
 import java.util.Scanner;
-
 import javax.net.ssl.*;
 
 /**
- * @author rabbitfighter
+ * Client side of the InfoCollection server program
+ * 
+ * @author Joshua Michael Waggoner
  *
  */
 public class Client {
 
-	@SuppressWarnings("resource")
 	public static void main(String args[]) {
 
 		/*
@@ -47,22 +48,36 @@ public class Client {
 
 			// For input
 			String line = null;
+			String serverLine = null;
 
-			/*
-			 * Initially send this message to start the handshake and get a
-			 * response from the server
-			 */
+			// Print to the server
 			out.println("Client established connection at port " + portNumber);
+			printSessionInfo(socket.getSession());
 			/*
 			 * While there is input, print the input from server, and then send
 			 * the response back
 			 */
-			while (fromServer.hasNext()) {
-				// Print the line from the server
-				System.out.println(fromServer.nextLine());
-				// When the user has pressed [ENTER], print out to the server
-				if ((line = in.readLine()) != null) {
-					out.println(line);
+			while ((serverLine = fromServer.nextLine()) != null) {
+				if (serverLine.compareTo("SHUTDOWN") == 0) {
+					/*
+					 * Shutdown the program and print status
+					 */
+					System.out.println("Connection going down at <"
+							+ socket.getPort() + ">");
+					socket.close();
+					out.close();
+					in.close();
+					fromServer.close();
+					System.exit(1);
+
+				} else {
+					// Print the line from the server
+					System.out.println(serverLine);
+					// When the user has pressed [ENTER], print out to the
+					// server
+					if ((line = in.readLine()) != null) {
+						out.println(line);
+					}
 				}
 			}
 		} catch (IOException e) {
@@ -71,5 +86,27 @@ public class Client {
 							+ portNumber + " or listening for a connection");
 			System.out.println(e.getMessage());
 		}
+	}
+
+	/**
+	 * Prints the
+	 * 
+	 * @param sslSession
+	 */
+	public static void printSessionInfo(SSLSession sslSession) {
+		System.out
+				.println("\n**********************************************************************");
+		System.out.println("New connection established at peer port <"
+				+ sslSession.getPeerPort() + ">");
+		System.out.println("Peer host is: " + sslSession.getPeerHost());
+		System.out.println("Cipher suite is: " + sslSession.getCipherSuite());
+		System.out.println("Protocol is: " + sslSession.getProtocol());
+		System.out.println("Session ID is: " + sslSession.getId());
+		System.out.println("The creation time of this session is: "
+				+ new Date(sslSession.getCreationTime()));
+		System.out.println("Last accessed time of this session is: "
+				+ new Date(sslSession.getLastAccessedTime()));
+
+
 	}
 }
