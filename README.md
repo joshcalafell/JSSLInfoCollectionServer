@@ -42,11 +42,12 @@ To run the client you must first use keytool to create a simple JKS keystore sui
 <li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' -Djavax.net.debug=all Client 'host name' 'port'</li> 
 </ul>
 
-
-
-
-
-
+Shell Script
+============
+I wrote a shell script to help create the truststore, keystore, and certificates, as well as help users import the certs into keystores. The script can be found here:
+<ul>
+<li></li>
+<ul>
 
 Copyright
 ---------
