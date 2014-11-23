@@ -1,84 +1,59 @@
 import java.io.*;
 import java.util.Date;
-import java.util.Scanner;
 import javax.net.ssl.*;
 
 /**
- * Client side of the InfoCollection server program
+ * Server is the server side of the client-server program. It creates a new
+ * thread for every incoming socket connection that gets accepted. Each thread
+ * creates an SSL socket factory, and individual socket for the client and
+ * server to be able to talk to each other.
  * 
  * @author Joshua Michael Waggoner
  *
  */
-public class Client {
+public class Server extends Thread {
+
+	private SSLSocket socket;
+	private File currentFile;
+	private FileWriter currentFileWriter;;
+	private BufferedWriter currentBufferedWriter;
+
+	public Server(SSLSocket socket) {
+		this.setSocket(socket);
+	}
 
 	public static void main(String args[]) {
 
 		/*
-		 * Must take arguments defining port number and host name, else display
-		 * error
+		 * Must take arguments defining port number, else display error
 		 */
-		if (args.length != 2) {
-			System.err
-					.println("Usage: java EchoClient <host name> <port number>");
+		if (args.length != 1) {
+			System.err.println("Usage: java Server <port number>");
 			System.exit(1);
 		}
 
-		// Host name and port number
-		String hostName = args[0];
-		int portNumber = Integer.valueOf(args[1]);
+		// Get port number
+		int portNumber = Integer.valueOf(args[0]);
 
 		try {
-			// Create new SSL Socket Factory
-			SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory
+
+			// New server socket factory
+			SSLServerSocketFactory serverSocketFactory = (SSLServerSocketFactory) SSLServerSocketFactory
 					.getDefault();
-			// New SSL Socket
-			SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket(
-					hostName, portNumber);
-			System.out.println("Client connected at port <" + portNumber
-					+ "> on <" + hostName + ">");
+			// New SSL server socket
+			SSLServerSocket sslServerSocket = (SSLServerSocket) serverSocketFactory
+					.createServerSocket(portNumber);
+			System.out.println("Server started at port <" + portNumber + ">");
 
-			// Print writer for output stream
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-			// Buffered reader for input
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					System.in));
+			while (true) {
 
-			// For receiving input
-			Scanner fromServer = new Scanner(socket.getInputStream());
+				// Create a new sslSocket for incoming connection
+				SSLSocket sslSocket = (SSLSocket) (sslServerSocket.accept());
+				// Start a new Server thread
 
-			// For input
-			String line = null;
-			String serverLine = null;
+				// Start the session
+				(new Server(sslSocket)).start();
 
-			// Print to the server
-			out.println("Client established connection at port " + portNumber);
-			printSessionInfo(socket.getSession());
-			/*
-			 * While there is input, print the input from server, and then send
-			 * the response back
-			 */
-			while ((serverLine = fromServer.nextLine()) != null) {
-				if (serverLine.compareTo("SHUTDOWN") == 0) {
-					/*
-					 * Shutdown the program and print status
-					 */
-					System.out.println("Connection going down at <"
-							+ socket.getPort() + ">");
-					socket.close();
-					out.close();
-					in.close();
-					fromServer.close();
-					System.exit(1);
-
-				} else {
-					// Print the line from the server
-					System.out.println(serverLine);
-					// When the user has pressed [ENTER], print out to the
-					// server
-					if ((line = in.readLine()) != null) {
-						out.println(line);
-					}
-				}
 			}
 		} catch (IOException e) {
 			System.out
@@ -88,15 +63,160 @@ public class Client {
 		}
 	}
 
+	public void run() {
+
+		try {
+
+			printSessionInfo(this.getSocket().getSession());
+
+			// Socket's input stream
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					socket.getInputStream()));
+
+			// Print writer for output stream
+			PrintWriter out = new PrintWriter(this.getSocket()
+					.getOutputStream(), true);
+
+			String line = null;
+
+			int questionsLeft = 6;
+
+			while ((line = in.readLine()) != null) {
+
+				switch (questionsLeft) {
+
+				case 6:
+					System.out.println(line);
+					out.println("Please enter your user name: ");
+					questionsLeft--;
+					break;
+				case 5:
+					// System.out.println(line);
+					/*
+					 * Set a new current file, file writer, and buffered writer
+					 */
+					this.setCurrentFile(new File(line + ".txt"));
+					this.setCurrentFileWriter(new FileWriter(this
+							.getCurrentFile().getAbsoluteFile()));
+					this.setCurrentBufferedWriter(new BufferedWriter(this
+							.getCurrentFileWriter()));
+					this.getCurrentBufferedWriter().write("User name: " + line);
+					out.println("Please enter your full name: ");
+					questionsLeft--;
+					break;
+
+				case 4:
+					// System.out.println(line);
+					this.getCurrentBufferedWriter().write(
+							"\nFull name: " + line);
+					out.println("Please enter your address: ");
+					questionsLeft--;
+					break;
+
+				case 3:
+					// System.out.println(line);
+					this.getCurrentBufferedWriter().write("\nAddress: " + line);
+					out.println("Please enter your phone number: ");
+					questionsLeft--;
+					break;
+
+				case 2:
+					// System.out.println(line);
+					this.getCurrentBufferedWriter().write(
+							"\nPhone number: " + line);
+					out.println("Please enter your email address: ");
+					questionsLeft--;
+					break;
+
+				case 1:
+					// System.out.println(line);
+					this.getCurrentBufferedWriter().write(
+							"\nEmail Address: " + line + "\n");
+					out.println("Add more users (\"yes\" or any for no): ");
+					questionsLeft--;
+					break;
+
+				case 0:
+					if (line.compareToIgnoreCase("yes") == 0) {
+						/*
+						 * Repeat steps
+						 */
+						{
+							out.println("Please enter your user name:");
+							this.getCurrentBufferedWriter().close();
+							this.getCurrentFileWriter().close();
+							questionsLeft = 5;
+							break;
+						}
+					} else {
+						/*
+						 * Close all connections and this thread
+						 */
+						{
+							out.println("SHUTDOWN");
+							this.getCurrentBufferedWriter().close();
+							this.getCurrentFileWriter().close();
+							System.out.println("Connection closed at peer port <"
+									+ socket.getPort() + ">");
+							this.getSocket().close();
+							break;
+						}
+						// System.exit(1);
+					}
+
+				}// end switch
+				
+			
+
+			}
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}// end run()
+
+	/***** Getters/Setters *****/
+
+	public SSLSocket getSocket() {
+		return socket;
+	}
+
+	public void setSocket(SSLSocket socket) {
+		this.socket = socket;
+	}
+
+	public File getCurrentFile() {
+		return currentFile;
+	}
+
+	public void setCurrentFile(File currentFile) {
+		this.currentFile = currentFile;
+	}
+
+	public FileWriter getCurrentFileWriter() {
+		return currentFileWriter;
+	}
+
+	public void setCurrentFileWriter(FileWriter currentFileWriter) {
+		this.currentFileWriter = currentFileWriter;
+	}
+
+	public BufferedWriter getCurrentBufferedWriter() {
+		return currentBufferedWriter;
+	}
+
+	public void setCurrentBufferedWriter(BufferedWriter currentBufferedWriter) {
+		this.currentBufferedWriter = currentBufferedWriter;
+	}
+
+	/***** End Getters/Setters *****/
+
 	/**
 	 * Prints the
 	 * 
 	 * @param sslSession
 	 */
-	public static void printSessionInfo(SSLSession sslSession) {
-		System.out
-				.println("\n**********************************************************************");
-		System.out.println("New connection established at <"
+	public void printSessionInfo(SSLSession sslSession) {
+		System.out.println("\nNew connection established at peer port <"
 				+ sslSession.getPeerPort() + ">");
 		System.out.println("Peer host is: " + sslSession.getPeerHost());
 		System.out.println("Cipher suite is: " + sslSession.getCipherSuite());
@@ -106,7 +226,8 @@ public class Client {
 				+ new Date(sslSession.getCreationTime()));
 		System.out.println("Last accessed time of this session is: "
 				+ new Date(sslSession.getLastAccessedTime()));
-
+		
 
 	}
-}
+
+}// EOF
