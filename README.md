@@ -38,7 +38,7 @@ To run the client you must first use keytool to create a simple JKS keystore sui
 
 Copyright
 ---------
-&#169; rabbitfighter.net 2014
+&copy 2014 <strong>rabbitfighter.net 2014</strong>
 
 
 
