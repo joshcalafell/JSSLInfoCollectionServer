@@ -6,7 +6,8 @@ Navigation
 -----------
 [JSSLInfoCollectionServer](#jsslinfocollectionserver) |
 [Purpose](#purpose) |
-[Screenshot](#screenshot) |
+[Server Screenshot](#serverscreenshot) |
+[Clientt Screenshot](#clientrscreenshot) |
 [Author](#author) |
 [Usage](#usage) | 
 [Shell Script](#shellscript) |
@@ -17,10 +18,13 @@ Purpose
 -------
 This was written for my final project in CS3750-Computer/Network Secutiry class at MSU Denver
 
-Screenshot
-----------
-![Picture]
+Server Screenshot
+-----------------
+![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/Server.png)
 
+Client Screenshot
+-----------------
+![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/Client.png)
 
 Author
 ------
@@ -44,7 +48,7 @@ To run the client you must first use keytool to create a simple JKS keystore sui
 </ul>
 
 Shell Script
-============
+------------
 I wrote a shell script to help create the truststore, keystore, and certificates, as well as help users import the certs into keystores. The script can be found here:
 <ul>
 <li>https://github.com/rabbitfighter81/SSLKeytool</li>
