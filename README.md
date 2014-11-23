@@ -14,7 +14,7 @@ Navigation
 
 Purpose
 -------
-This was written for my final project in CS3750-Computer/Network Secutiry class att MSU Denver
+This was written for my final project in CS3750-Computer/Network Secutiry class at MSU Denver
 
 Screenshot
 ----------
@@ -23,7 +23,7 @@ Screenshot
 
 Author
 ------
-&#9770 Joshua Michael Waggoner (rabbitfighter81@gmail.com)</li>
+Joshua Michael Waggoner (rabbitfighter81@gmail.com)</li>
 
 Usage
 -----
