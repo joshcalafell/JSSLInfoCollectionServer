@@ -48,7 +48,7 @@ Shell Script
 I wrote a shell script to help create the truststore, keystore, and certificates, as well as help users import the certs into keystores. The script can be found here:
 <ul>
 <li>https://github.com/rabbitfighter81/SSLKeytool</li>
-<ul>
+</ul>
 
 Copyright
 ---------
