@@ -39,6 +39,7 @@ To run the client you must first use keytool to create a simple JKS keystore sui
 </ul>
 <ul><strong>To run the client w/ debuggin, you must add the following parameters:</strong>
 <li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' -Djavax.net.debug=all Client 'host name' 'port'</li> 
+</ul>
 
 
 
