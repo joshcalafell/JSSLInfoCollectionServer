@@ -33,12 +33,22 @@ To run the client you must first use keytool to create a simple JKS keystore sui
 <li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' Server 'port'</li>
 </ul>
 <ul><strong>To run the client w/o debuggin, you must add the following parameters:</strong>
-<li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' Client 'host name'</li> 'port'
+<li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' Client 'host name' 'port'</li> 
+<ul><strong>To run the server w/ debugging, you must add the following parameters:</strong>
+<li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' -Djavax.net.debug=all Server 'port'</li>
+</ul>
+<ul><strong>To run the client w/ debuggin, you must add the following parameters:</strong>
+<li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' -Djavax.net.debug=all Client 'host name' 'port'</li> 
+
+
+
+
+
 
 
 Copyright
 ---------
-&#169; 2014 <strong>rabbitfighter.net 2014</strong>
+<strong> &#169; 2014 rabbitfighter.net</strong>
 
 
 
