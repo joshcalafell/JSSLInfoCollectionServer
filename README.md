@@ -3,10 +3,10 @@ Navigation
 [JSSLInfoCollectionServer](#jsslinfocollectionserver) |
 [Author](#author) |
 [Purpose](#purpose) |
+[Usage](#usage) | 
 [Server Screenshot](#serverscreenshot) |
 [Client Screenshot](#clientrscreenshot) |
 [Contents of User File](#contentsofuserfile)
-[Usage](#usage) | 
 [Shell Script](#shellscript) |
 [Copyright](#copyright)  
 
@@ -22,21 +22,9 @@ Purpose
 -------
 This was written for my final project in CS3750-Computer/Network Secutiry class at MSU Denver
 
-Server Screenshot
------------------
-![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/Server.png)
-
-Client Screenshot
------------------
-![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/Client.png)
-
-Contents of User File
----------------------
-![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/catOfFooBar.png)
-
 Usage
 -----
-To run the client you must first use keytool to create a simple JKS keystore suitable for use with JSSE. Make a keyEntry (with public/private keys) in your keystore, then make corrosponding trustedCertEnttry (public keys only) in your truststore. keystore goes in server directory and the truststore goes in the client directory. 
+To run the client you must first use keytool to create a simple JKS keystore suitable for use with JSSE. Make a keyEntry (with public/private keys) in your keystore, then make corrosponding trustedCertEnttry (public keys only) in your truststore. Once created, the keystore goes in server directory and the truststore goes in the client directory. 
 
 <ul><strong>To run the server w/o debugging, you must add the following parameters:</strong>
 <li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' Server 'port'</li>
@@ -50,6 +38,18 @@ To run the client you must first use keytool to create a simple JKS keystore sui
 <ul><strong>To run the client w/ debuggin, you must add the following parameters:</strong>
 <li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' -Djavax.net.debug=all Client 'host name' 'port'</li> 
 </ul>
+
+Server Screenshot
+-----------------
+![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/Server.png)
+
+Client Screenshot
+-----------------
+![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/Client.png)
+
+Contents of User File
+---------------------
+![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/catOfFooBar.png)
 
 Shell Script
 ------------
