@@ -28,13 +28,13 @@ Joshua Michael Waggoner (rabbitfighter81@gmail.com)</li>
 Usage
 -----
 To run the client you must first use keytool to create a simple JKS keystore suitable for use with JSSE. Make a keyEntry (with public/private keys) in your keystore, then make corrosponding trustedCertEnttry (public keys only) in your truststore. keystore goes in server directory and the truststore goes in the client directory. 
-<ul>
-<ul> To run the server w/o debuggin, you must add the following parameters:
+
+<ul><strong>To run the server w/o debugging, you must add the following parameters:</strong>
 <li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' Server 'port'</li>
 </ul>
-<ul> To run the client w/o debuggin, you must add the following parameters: 
+<ul><strong>To run the client w/o debuggin, you must add the following parameters:</strong>
 <li>java -Djavax.net.ssl.keyStore='path to keystore' -Djavax.net.ssl.keyStorePassword='password' Client 'host name'</li> 'port'
-</ul>
+
 
 Copyright
 ---------
