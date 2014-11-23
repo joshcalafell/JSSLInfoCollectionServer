@@ -1,18 +1,22 @@
-JSSLInfoCollectionServer
-========================
-A simple JSSL secure clint/server program that allows multithreading sockets, allowing multiple clients to log on simultaniously, and fill out user information. Both client and server display various properties of each socket's session upon creation and subsequent connections. Once the user's information is collected, for each user, the collected information is stored in a text file named after the username, i.e. 'username'.txt. Each client has the ability to keep creating usernames until they choose not to. For security, this program uses SSL, keystores, truststores, and trusted certificates, along with corrosponding passwords. This process naturally encrypts messages going to and from both client and server. Both programs can be run in either regular or debug mode. Debug mode is especially interesting if you really want to understand how this process works. 
-
 Navigation
 -----------
 [JSSLInfoCollectionServer](#jsslinfocollectionserver) |
+[Author](#author) |
 [Purpose](#purpose) |
 [Server Screenshot](#serverscreenshot) |
-[Clientt Screenshot](#clientrscreenshot) |
-[Author](#author) |
+[Client Screenshot](#clientrscreenshot) |
+[Contents of User File](#contentsofuserfile)
 [Usage](#usage) | 
 [Shell Script](#shellscript) |
 [Copyright](#copyright)  
 
+JSSLInfoCollectionServer
+========================
+A simple JSSL secure clint/server program that allows multithreading sockets, allowing multiple clients to log on simultaniously, and fill out user information. Both client and server display various properties of each socket's session upon creation and subsequent connections. Once the user's information is collected, for each user, the collected information is stored in a text file named after the username, i.e. 'username'.txt. Each client has the ability to keep creating usernames until they choose not to. For security, this program uses SSL, keystores, truststores, and trusted certificates, along with corrosponding passwords. This process naturally encrypts messages going to and from both client and server. Both programs can be run in either regular or debug mode. Debug mode is especially interesting if you really want to understand how this process works. 
+
+Author
+------
+Joshua Michael Waggoner (rabbitfighter81@gmail.com)</li>
 
 Purpose
 -------
@@ -26,9 +30,9 @@ Client Screenshot
 -----------------
 ![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/Client.png)
 
-Author
-------
-Joshua Michael Waggoner (rabbitfighter81@gmail.com)</li>
+Contents of User File
+---------------------
+![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/catOfFooBar.png)
 
 Usage
 -----
