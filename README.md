@@ -29,10 +29,10 @@ Usage
 -----
 To run the client you must first use keytool to create a simple JKS keystore suitable for use with JSSE. Make a keyEntry (with public/private keys) in your keystore, then make corrosponding trustedCertEnttry (public keys only) in your truststore. keystore goes in server directory and the truststore goes in the client directory. 
 <ul>
-<li> To run the server w/o debuggin, you must add the following parameters: 
+<li> To run the server w/o debuggin, you must add the following parameters: \n
 java -Djavax.net.ssl.keyStore=<path to keystore> -Djavax.net.ssl.keyStorePassword=<password> Server <port>
 </li>
-<li> To run the client w/o debuggin, you must add the following parameters:
+<li> To run the client w/o debuggin, you must add the following parameters: \n
 java -Djavax.net.ssl.keyStore=<path to keystore> -Djavax.net.ssl.keyStorePassword=<password> Client <host name> <port>
 </li>
 
