@@ -29,7 +29,6 @@ public class Server extends Thread {
 	}
 
 	public static void main(String args[]) {
-
 		/*
 		 * Must take arguments defining port number, else display error
 		 */
