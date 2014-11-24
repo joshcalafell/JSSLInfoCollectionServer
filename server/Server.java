@@ -218,7 +218,8 @@ public class Server extends Thread {
 	}
 
 	/***** End Getters/Setters *****/
-
+	
+	
 	/**
 	 * Prints the session info
 	 * 
