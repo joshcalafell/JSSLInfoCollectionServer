@@ -1,11 +1,8 @@
 import java.io.*;
 import java.util.Date;
-<<<<<<< HEAD
-=======
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 import javax.net.ssl.*;
 
 /**
@@ -95,17 +92,12 @@ public class Server extends Thread {
 
 				case 6:
 					System.out.println(line);
-<<<<<<< HEAD
 					out.println("Please enter your user name: ");
-=======
 					out.println("Please enter your user name (No spaces or special characters): ");
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 					questionsLeft--;
 					break;
 
 				case 5:
-<<<<<<< HEAD
-					// System.out.println(line);
 					/*
 					 * Set a new current file, file writer, and buffered writer
 					 */
@@ -120,8 +112,6 @@ public class Server extends Thread {
 					break;
 
 				case 4:
-					// System.out.println(line);
-=======
 					// Validate input with regex
 					pattern = Pattern.compile(regex);
 					matcher = pattern.matcher(line);
@@ -148,7 +138,6 @@ public class Server extends Thread {
 					}
 
 				case 4:
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 					this.getCurrentBufferedWriter().write(
 							"\nFull name: " + line);
 					out.println("Please enter your address: ");
@@ -156,20 +145,12 @@ public class Server extends Thread {
 					break;
 
 				case 3:
-<<<<<<< HEAD
-					// System.out.println(line);
-=======
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 					this.getCurrentBufferedWriter().write("\nAddress: " + line);
 					out.println("Please enter your phone number: ");
 					questionsLeft--;
 					break;
 
 				case 2:
-<<<<<<< HEAD
-					// System.out.println(line);
-=======
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 					this.getCurrentBufferedWriter().write(
 							"\nPhone number: " + line);
 					out.println("Please enter your email address: ");
@@ -177,10 +158,6 @@ public class Server extends Thread {
 					break;
 
 				case 1:
-<<<<<<< HEAD
-					// System.out.println(line);
-=======
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 					this.getCurrentBufferedWriter().write(
 							"\nEmail Address: " + line + "\n");
 					out.println("Add more users (\"yes\" or any for no): ");
@@ -192,7 +169,7 @@ public class Server extends Thread {
 						/*
 						 * Repeat steps
 						 */
-<<<<<<< HEAD
+
 						{
 							out.println("Please enter your user name:");
 							this.getCurrentBufferedWriter().close();
@@ -200,19 +177,11 @@ public class Server extends Thread {
 							questionsLeft = 5;
 							break;
 						}
-=======
-						out.println("Please enter your user name:");
-						this.getCurrentBufferedWriter().close();
-						this.getCurrentFileWriter().close();
-						questionsLeft = 5;
-						break;
 
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 					} else {
 						/*
 						 * Close all connections and this thread
 						 */
-<<<<<<< HEAD
 						{
 							out.println("SHUTDOWN");
 							this.getCurrentBufferedWriter().close();
@@ -225,7 +194,6 @@ public class Server extends Thread {
 						// System.exit(1);
 					}
 
-=======
 						out.println("SHUTDOWN");
 						this.getCurrentBufferedWriter().close();
 						this.getCurrentFileWriter().close();
@@ -236,7 +204,6 @@ public class Server extends Thread {
 
 					}
 
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 				}// end switch
 				
 			
@@ -282,38 +249,15 @@ public class Server extends Thread {
 	}
 
 	/***** End Getters/Setters *****/
-<<<<<<< HEAD
 
 	/**
-	 * Prints the
-=======
-	
-	
-	/**
 	 * Prints the session info
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 	 * 
 	 * @param sslSession
 	 */
 	public void printSessionInfo(SSLSession sslSession) {
-<<<<<<< HEAD
-		System.out.println("\nNew connection established at peer port <"
-				+ sslSession.getPeerPort() + ">");
-		System.out.println("Peer host is: " + sslSession.getPeerHost());
-		System.out.println("Cipher suite is: " + sslSession.getCipherSuite());
-		System.out.println("Protocol is: " + sslSession.getProtocol());
-		System.out.println("Session ID is: " + sslSession.getId());
-		System.out.println("The creation time of this session is: "
-				+ new Date(sslSession.getCreationTime()));
-		System.out.println("Last accessed time of this session is: "
-				+ new Date(sslSession.getLastAccessedTime()));
-		
 
-	}
-
-}// EOF
-=======
-		if (sslSession.isValid()) {
+	if (sslSession.isValid()) {
 			System.out.println("\nNew connection established at peer port <"
 					+ sslSession.getPeerPort() + ">");
 			System.out.println("Peer host is: " + sslSession.getPeerHost());
@@ -329,7 +273,9 @@ public class Server extends Thread {
 		} else {
 			System.out.println("\nSession is invalid");
 		}
+		
+
 	}
 
 }// EOF
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
+
