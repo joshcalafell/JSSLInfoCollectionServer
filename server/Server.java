@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.Date;
 import javax.net.ssl.*;
 
 /**
@@ -7,21 +8,18 @@ import javax.net.ssl.*;
  * creates an SSL socket factory, and individual socket for the client and
  * server to be able to talk to each other.
  * 
- * @author rabbitfighter
+ * @author Joshua Michael Waggoner
  *
  */
 public class Server extends Thread {
 
 	private SSLSocket socket;
-	private SessionInfo info;
 	private File currentFile;
 	private FileWriter currentFileWriter;;
 	private BufferedWriter currentBufferedWriter;
 
 	public Server(SSLSocket socket) {
 		this.setSocket(socket);
-		this.setInfo(new SessionInfo(socket.getSession()));
-		this.getInfo().printSessionInfo();
 	}
 
 	public static void main(String args[]) {
@@ -69,12 +67,15 @@ public class Server extends Thread {
 
 		try {
 
+			printSessionInfo(this.getSocket().getSession());
+
 			// Socket's input stream
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					socket.getInputStream()));
 
 			// Print writer for output stream
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+			PrintWriter out = new PrintWriter(this.getSocket()
+					.getOutputStream(), true);
 
 			String line = null;
 
@@ -85,12 +86,12 @@ public class Server extends Thread {
 				switch (questionsLeft) {
 
 				case 6:
-					//System.out.println(line);
+					System.out.println(line);
 					out.println("Please enter your user name: ");
 					questionsLeft--;
 					break;
 				case 5:
-					//System.out.println(line);
+					// System.out.println(line);
 					/*
 					 * Set a new current file, file writer, and buffered writer
 					 */
@@ -105,29 +106,32 @@ public class Server extends Thread {
 					break;
 
 				case 4:
-					//System.out.println(line);
-					this.getCurrentBufferedWriter().write("\nFull name: " + line);
+					// System.out.println(line);
+					this.getCurrentBufferedWriter().write(
+							"\nFull name: " + line);
 					out.println("Please enter your address: ");
 					questionsLeft--;
 					break;
-					
+
 				case 3:
-					//System.out.println(line);
+					// System.out.println(line);
 					this.getCurrentBufferedWriter().write("\nAddress: " + line);
 					out.println("Please enter your phone number: ");
 					questionsLeft--;
 					break;
 
 				case 2:
-					//System.out.println(line);
-					this.getCurrentBufferedWriter().write("\nPhone number: " + line);
+					// System.out.println(line);
+					this.getCurrentBufferedWriter().write(
+							"\nPhone number: " + line);
 					out.println("Please enter your email address: ");
 					questionsLeft--;
 					break;
 
 				case 1:
-					//System.out.println(line);
-					this.getCurrentBufferedWriter().write("\nEmail Address: " + line + "\n");
+					// System.out.println(line);
+					this.getCurrentBufferedWriter().write(
+							"\nEmail Address: " + line + "\n");
 					out.println("Add more users (\"yes\" or any for no): ");
 					questionsLeft--;
 					break;
@@ -137,27 +141,32 @@ public class Server extends Thread {
 						/*
 						 * Repeat steps
 						 */
-						out.println("Please enter your user name:");
-						this.getCurrentBufferedWriter().close();
-						this.getCurrentFileWriter().close();
-						questionsLeft = 5;
-						break;
+						{
+							out.println("Please enter your user name:");
+							this.getCurrentBufferedWriter().close();
+							this.getCurrentFileWriter().close();
+							questionsLeft = 5;
+							break;
+						}
 					} else {
 						/*
-						 * Close all connections and exit
+						 * Close all connections and this thread
 						 */
-						in.close();
-						out.close();
-						socket.close();
-						this.getCurrentBufferedWriter().close();
-						this.getCurrentFileWriter().close();
-						System.out.println("Connection closed... Goodbye :)");
-						System.exit(1);
+						{
+							out.println("SHUTDOWN");
+							this.getCurrentBufferedWriter().close();
+							this.getCurrentFileWriter().close();
+							System.out.println("Connection closed at peer port <"
+									+ socket.getPort() + ">");
+							this.getSocket().close();
+							break;
+						}
+						// System.exit(1);
 					}
 
-					break;
-
 				}// end switch
+				
+			
 
 			}
 		} catch (Exception e) {
@@ -173,14 +182,6 @@ public class Server extends Thread {
 
 	public void setSocket(SSLSocket socket) {
 		this.socket = socket;
-	}
-
-	public SessionInfo getInfo() {
-		return info;
-	}
-
-	public void setInfo(SessionInfo info) {
-		this.info = info;
 	}
 
 	public File getCurrentFile() {
@@ -205,6 +206,28 @@ public class Server extends Thread {
 
 	public void setCurrentBufferedWriter(BufferedWriter currentBufferedWriter) {
 		this.currentBufferedWriter = currentBufferedWriter;
+	}
+
+	/***** End Getters/Setters *****/
+
+	/**
+	 * Prints the
+	 * 
+	 * @param sslSession
+	 */
+	public void printSessionInfo(SSLSession sslSession) {
+		System.out.println("\nNew connection established at peer port <"
+				+ sslSession.getPeerPort() + ">");
+		System.out.println("Peer host is: " + sslSession.getPeerHost());
+		System.out.println("Cipher suite is: " + sslSession.getCipherSuite());
+		System.out.println("Protocol is: " + sslSession.getProtocol());
+		System.out.println("Session ID is: " + sslSession.getId());
+		System.out.println("The creation time of this session is: "
+				+ new Date(sslSession.getCreationTime()));
+		System.out.println("Last accessed time of this session is: "
+				+ new Date(sslSession.getLastAccessedTime()));
+		
+
 	}
 
 }// EOF

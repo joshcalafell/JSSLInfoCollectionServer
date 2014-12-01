@@ -21,11 +21,7 @@ options=(
 	"Export and examine the self-signed certificate" 
 	"Import the certificate into a new truststore" 
 	"Examine the truststore" 
-	"Add to your local JVM's trust store"
-	"Run your application's server with the appropriate key stores" 
-	"Run your application's client with the appropriate key stores" 
-	"Run your application's server in debug mode" 
-	"Run your application's client in debug mode" 
+	"Add to a keystore"
 	"Quit"
 	)
 
@@ -82,10 +78,10 @@ do
 			keytool -list -v -keystore truststore
         ;;
 
-        # 6) Add to local JVM's truststore
-        "Add to your local JVM's trust store")
+        # 6) Add to keystore
+        "Add to a keystore")
 
-			echo "You chose \"Add to your local JVM's trust store\""
+			echo "You chose \"Add to keystore of your choosing\""
 
 			echo "Please enter the path to your computer's \"cacerts\" file"
 				 #"This is usually found in /usr/lib/jvm/<java version folder>
@@ -94,83 +90,7 @@ do
 			read path
 
 			sudo keytool -import -file $username.cer -alias "${username}" -keystore "${path}"
-
 		;;
-
-        ###########################################################################################
-        ##                                   REGULAR RUN MODES                                   ##
-        ###########################################################################################
-
-        # 7) Now run your applications with the appropriate key stores.
-        "Run your application's server with the appropriate key stores")
-
-	        echo "You chose \"Run your application's server with the appropriate key stores\""
-	        echo "Please enter the name of your compiled server class w/o extension and press [ENTER]"
-	        read server
-	        echo "Please enter the password for the keystore and press [ENTER]"
-	        read password_keystore
-	        echo "Please enter the port number to use and press [ENTER]"
-	        read portNumber
-
-			java -Djavax.net.ssl.keyStore=keystore \
-			-Djavax.net.ssl.keyStorePassword="${password_keystore}" "${server}" "${portNumber}"
-        ;;
-
-        # 8) Now run your application's clients with the appropriate key stores. 
-        "Run your application's client with the appropriate key stores")
-
-	        echo "You chose \"Run your application's client with the appropriate key stores\""
-	        echo "Please enter the name of your compiled client class w/o extension and press [ENTER]"
-	        read client
-	    	echo "Please enter the password for the keystore and press [ENTER]"
-	        read password_keystore
-	        echo "Please enter the port number to use and press [ENTER]"
-	        read portNumber
-	        echo "Please enter the hostname to use and press [ENTER]"
-	        read hotName
-
-			java -Djavax.net.ssl.keyStore=keystore \
-			-Djavax.net.ssl.keyStorePassword="${password_keystore}" "${client}" "${hostName}" "${portNumber}"
-        ;;
-
-        ###########################################################################################
-        ##                                       DEBUG MODES                                     ##
-        ###########################################################################################
-
-        # Run your applications with the appropriate key stores IN DEBUG MODE.
-        "Run your application's server in debug mode")
-
-	        echo "You chose \"Run your application's server in debug mode\""
-	        echo "Please enter the name of your compiled server class w/o extension and press [ENTER]"
-	        read server
-	        echo "Please enter the password for the keystore and press [ENTER]"
-	        read password_keystore
-	        echo "Please enter the port number tto use and press [ENTER]"
-	        read portNumber
-
-			java -Djavax.net.ssl.keyStore=keystore \
-			-Djavax.net.ssl.keyStorePassword="${password_keystore}" \
-			-Djavax.net.debug=all "${server}" "${portNumber}"
-		;;
-
-		# Run your application's clients with the appropriate key stores IN DEBUG MODE. 
-        "Run your application's client in debug mode")
-
-	        echo "You chose \"Run your application's client in debug mode\""
-	        echo "Please enter the name of your compiled client class w/o extension and press [ENTER]"
-	        read client
-	    	echo "Please enter the password for the keystore and press [ENTER]"
-	        read password_keystore
-	        echo "Please enter the port number to use and press [ENTER]"
-	        read portNumber
-	        echo "Please enter the hostname to use and press [ENTER]"
-	        read hotName
-
-			java -Djavax.net.ssl.keyStore=keystore \
-			-Djavax.net.ssl.keyStorePassword="${password_keystore}" \
-			-Djavax.net.debug=all "${client}" "${hostName}" "${portNumber}"
-
-        ;;
 
 		# Quit
         "Quit")

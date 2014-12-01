@@ -1,5 +1,0 @@
-User name: joshua
-Full name: joshua michael
-Address: 12345 Jackson St.
-Phone number: 303-675-4750
-Email Address: email@email.com
