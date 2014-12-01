@@ -90,16 +90,11 @@ public class Client {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Prints the
-=======
-	 * Prints the session info
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
 	 * 
 	 * @param sslSession
 	 */
 	public static void printSessionInfo(SSLSession sslSession) {
-<<<<<<< HEAD
+
 		System.out.println("\nNew connection established at peer port <"
 				+ sslSession.getPeerPort() + ">");
 		System.out.println("Peer host is: " + sslSession.getPeerHost());
@@ -114,7 +109,6 @@ public class Client {
 
 	}
 }
-=======
 		
 		if (sslSession.isValid()) {
 			
@@ -133,5 +127,4 @@ public class Client {
 		}
 		
 	}
-}
->>>>>>> 4acc8c936a988670114fbdbee80144d74cbd036e
+}//EOF
