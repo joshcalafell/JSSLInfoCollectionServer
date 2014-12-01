@@ -51,7 +51,7 @@ Contents of User File
 ---------------------
 ![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/catOfFooBar.png)
 
-Shell Script
+Shell Script
 ------------
 I wrote a shell script to help create the truststore, keystore, and certificates, as well as help users import the certs into keystores. The script can be found here:
 <ul>
@@ -60,7 +60,7 @@ I wrote a shell script to help create the truststore, keystore, and certificates
 
 Copyright
 ---------
-<strong> &#169; 2014 http://www.rabbitfighter.net</strong>
+<strong> &#169; 2014 /www.rabbitfighter.net</strong>
 
 
 
