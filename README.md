@@ -60,7 +60,7 @@ I wrote a shell script to help create the truststore, keystore, and certificates
 
 Copyright
 ---------
-<strong> &#169; 2014 /www.rabbitfighter.net</strong>
+<strong> &#169; 2014 www.rabbitfighter.net</strong>
 
 
 
