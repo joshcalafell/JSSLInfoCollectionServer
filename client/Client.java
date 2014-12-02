@@ -90,25 +90,11 @@ public class Client {
 	}
 
 	/**
+	 * Prints the session info
 	 * 
 	 * @param sslSession
 	 */
 	public static void printSessionInfo(SSLSession sslSession) {
-
-		System.out.println("\nNew connection established at peer port <"
-				+ sslSession.getPeerPort() + ">");
-		System.out.println("Peer host is: " + sslSession.getPeerHost());
-		System.out.println("Cipher suite is: " + sslSession.getCipherSuite());
-		System.out.println("Protocol is: " + sslSession.getProtocol());
-		System.out.println("Session ID is: " + sslSession.getId());
-		System.out.println("The creation time of this session is: "
-				+ new Date(sslSession.getCreationTime()));
-		System.out.println("Last accessed time of this session is: "
-				+ new Date(sslSession.getLastAccessedTime()));
-
-
-	}
-}
 		
 		if (sslSession.isValid()) {
 			
@@ -127,4 +113,4 @@ public class Client {
 		}
 		
 	}
-}//EOF
+}
