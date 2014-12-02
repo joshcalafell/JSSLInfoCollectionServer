@@ -29,6 +29,7 @@ public class Server extends Thread {
 	}
 
 	public static void main(String args[]) {
+
 		/*
 		 * Must take arguments defining port number, else display error
 		 */
@@ -92,26 +93,11 @@ public class Server extends Thread {
 
 				case 6:
 					System.out.println(line);
-					out.println("Please enter your user name: ");
 					out.println("Please enter your user name (No spaces or special characters): ");
 					questionsLeft--;
 					break;
 
 				case 5:
-					/*
-					 * Set a new current file, file writer, and buffered writer
-					 */
-					this.setCurrentFile(new File(line + ".txt"));
-					this.setCurrentFileWriter(new FileWriter(this
-							.getCurrentFile().getAbsoluteFile()));
-					this.setCurrentBufferedWriter(new BufferedWriter(this
-							.getCurrentFileWriter()));
-					this.getCurrentBufferedWriter().write("User name: " + line);
-					out.println("Please enter your full name: ");
-					questionsLeft--;
-					break;
-
-				case 4:
 					// Validate input with regex
 					pattern = Pattern.compile(regex);
 					matcher = pattern.matcher(line);
@@ -169,31 +155,16 @@ public class Server extends Thread {
 						/*
 						 * Repeat steps
 						 */
-
-						{
-							out.println("Please enter your user name:");
-							this.getCurrentBufferedWriter().close();
-							this.getCurrentFileWriter().close();
-							questionsLeft = 5;
-							break;
-						}
+						out.println("Please enter your user name:");
+						this.getCurrentBufferedWriter().close();
+						this.getCurrentFileWriter().close();
+						questionsLeft = 5;
+						break;
 
 					} else {
 						/*
 						 * Close all connections and this thread
 						 */
-						{
-							out.println("SHUTDOWN");
-							this.getCurrentBufferedWriter().close();
-							this.getCurrentFileWriter().close();
-							System.out.println("Connection closed at peer port <"
-									+ socket.getPort() + ">");
-							this.getSocket().close();
-							break;
-						}
-						// System.exit(1);
-					}
-
 						out.println("SHUTDOWN");
 						this.getCurrentBufferedWriter().close();
 						this.getCurrentFileWriter().close();
@@ -205,8 +176,6 @@ public class Server extends Thread {
 					}
 
 				}// end switch
-				
-			
 
 			}
 		} catch (Exception e) {
@@ -256,8 +225,7 @@ public class Server extends Thread {
 	 * @param sslSession
 	 */
 	public void printSessionInfo(SSLSession sslSession) {
-
-	if (sslSession.isValid()) {
+		if (sslSession.isValid()) {
 			System.out.println("\nNew connection established at peer port <"
 					+ sslSession.getPeerPort() + ">");
 			System.out.println("Peer host is: " + sslSession.getPeerHost());
@@ -273,9 +241,6 @@ public class Server extends Thread {
 		} else {
 			System.out.println("\nSession is invalid");
 		}
-		
-
 	}
 
 }// EOF
-
