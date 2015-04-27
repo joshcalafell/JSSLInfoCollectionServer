@@ -19,8 +19,7 @@ public class Client {
 		 * error
 		 */
 		if (args.length != 2) {
-			System.err
-					.println("Usage: java EchoClient <host name> <port number>");
+			System.err.println("Usage: java EchoClient <host name> <port number>");
 			System.exit(1);
 		}
 
@@ -30,19 +29,17 @@ public class Client {
 
 		try {
 			// Create new SSL Socket Factory
-			SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory
-					.getDefault();
+			SSLSocketFactory sslSocketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
 			// New SSL Socket
 			SSLSocket socket = (SSLSocket) sslSocketFactory.createSocket(
-					hostName, portNumber);
+			hostName, portNumber);
 			// 
-			System.out.println("Client connected at port <" + portNumber
-					+ "> on <" + hostName + ">");
+			System.out.println("Client connected at port <" + portNumber + "> on <" + hostName + ">");
 			// Print writer for output stream
 			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 			// Buffered reader for input
 			BufferedReader in = new BufferedReader(new InputStreamReader(
-					System.in));
+			System. in ));
 
 			// For receiving input
 			Scanner fromServer = new Scanner(socket.getInputStream());
@@ -63,11 +60,9 @@ public class Client {
 					/*
 					 * Shutdown the program and print status
 					 */
-					System.out.println("Connection going down at <"
-							+ socket.getPort() + ">");
+					System.out.println("Connection going down at <" + socket.getPort() + ">");
 					socket.close();
-					out.close();
-					in.close();
+					out.close(); in .close();
 					fromServer.close();
 					System.exit(1);
 
@@ -76,15 +71,13 @@ public class Client {
 					System.out.println(serverLine);
 					// When the user has pressed [ENTER], print out to the
 					// server
-					if ((line = in.readLine()) != null) {
+					if ((line = in .readLine()) != null) {
 						out.println(line);
 					}
 				}
 			}
 		} catch (IOException e) {
-			System.out
-					.println("Exception caught when trying to listen on port "
-							+ portNumber + " or listening for a connection");
+			System.out.println("Exception caught when trying to listen on port " + portNumber + " or listening for a connection");
 			System.out.println(e.getMessage());
 		}
 	}
@@ -95,22 +88,19 @@ public class Client {
 	 * @param sslSession
 	 */
 	public static void printSessionInfo(SSLSession sslSession) {
-		
+
 		if (sslSession.isValid()) {
-			
-			System.out.println("\nNew connection established at peer port <"
-					+ sslSession.getPeerPort() + ">");
+
+			System.out.println("\nNew connection established at peer port <" + sslSession.getPeerPort() + ">");
 			System.out.println("Peer host is: " + sslSession.getPeerHost());
 			System.out.println("Cipher suite is: " + sslSession.getCipherSuite());
 			System.out.println("Protocol is: " + sslSession.getProtocol());
 			System.out.println("Session ID is: " + sslSession.getId());
-			System.out.println("The creation time of this session is: "
-					+ new Date(sslSession.getCreationTime()));
-			System.out.println("Last accessed time of this session is: "
-					+ new Date(sslSession.getLastAccessedTime()));
+			System.out.println("The creation time of this session is: " + new Date(sslSession.getCreationTime()));
+			System.out.println("Last accessed time of this session is: " + new Date(sslSession.getLastAccessedTime()));
 		} else {
 			System.out.println("\nSession is invalid");
 		}
-		
+
 	}
 }
