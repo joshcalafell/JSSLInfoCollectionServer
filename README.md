@@ -51,8 +51,8 @@ Contents of User File
 ---------------------
 ![Picture](http://rabbitfighter.net/wp-content/uploads/2014/11/catOfFooBar.png)
 
-Shell Script
-------------
+Shell Script (Bash)
+--------------------
 I wrote a shell script to help create the truststore, keystore, and certificates, as well as help users import the certs into keystores. The script can be found here:
 <ul>
 <li>https://github.com/rabbitfighter81/SSLKeytool</li>
